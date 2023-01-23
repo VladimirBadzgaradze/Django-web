@@ -1,0 +1,34 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+
+{% block title %}My Doors{% endblock %}
+
+{% block content %}
+
+<h3> Devices that have been connected </h3>
+<div class="list-group" id="list-group">
+    {% for door, del, sec, system, bits, linkage in activity_delays %}
+        <div class="list-group-item list-group-item-action list-group-item-{% if sec > 60 %}danger{% elif sec > 20 %}warning{% else %}success{% endif %}">
+            <div style="display:inline-block;">
+                <p id="dr_name">Name: {{ door }}</p>
+                <p id="dr_last" style="color:red;margin-bottom:0px;">Last activity: {{ del }}</p>
+            </div>
+            <div style="display:inline-block;margin: 0 10px;font-size:12px;">
+                <p style="margin:0;">System: {{system}}</p>
+                <p style="margin:0;">Bits: {{bits}}</p>
+                <p style="margin:0;">Linkage: {{linkage}}</p>
+            </div>
+            <div style="display:flex;flex-direction:column;float:right;">
+                <a href="{% url 'manage' obj_name=door %}" style="margin-bottom:10px;" type="button" role="button" class="btn btn-success">Control</a>
+                <a href="{% url 'del_door' obj_name=door %}" style="" type="button" role="button" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'management/js/my_doors_update.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+
+{% block title %}Console: {{door_name}}{% endblock %}
+
+{% block manage_other %}
+<hr style="color:white;">
+<!--<h5 style="color:white;float:center;">{{ door_name }}</h5> -->
+<p style="color:white;float:center;margin-bottom:0px;">Instruments:</p>
+<div style="float:right;margin-top:10px;">
+    <li><a href="#"><button type="button" class="btn btn-sm btn-outline-dark">Console</button></a></li>
+    <li><a href="#"><button type="button" class="btn btn-sm btn-outline-dark">Camera</button></a></li>
+    <li><a href="#"><button type="button" class="btn btn-sm btn-outline-dark">Stream</button></a></li>
+</div>
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+
+{% block js %}
+<div class="console_with_input" style="display:flex;flex-flow:column;margin:10px 0;padding:0;">
+    <div style="overflow-y:scroll;" class="container" id="console"></div>
+    <footer class="footer bg-light" style="float:down;position:relative;bottom:0;">
+        <div class="container" style="padding:0;">
+            <form name="form" id="form" autocomplete="off" spellcheck="false" action="" onsubmit="javascript:submitForm();return false;">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col">
+                        <input id="commandInput" name="commandInput" type="text" placeholder="Command >>>" class="form-control bg-light text-dark">
+                    </div>
+                    <div class="col-sm-3">
+                        <button class="form-control bg-light text-dark" type="submit">Send</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </footer>
+</div>
+<script>
+    header = document.getElementsByClassName("d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom")[0];
+
+    div = document.getElementsByClassName("console_with_input")[0];
+    div.style.height = window.innerHeight - header.offsetHeight - 20 + "px";
+
+</script>
+<script src="{% static 'management/js/manage.js' %}"></script>
+{% endblock %}
